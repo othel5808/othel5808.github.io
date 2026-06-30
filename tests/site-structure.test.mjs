@@ -66,3 +66,14 @@ test('blog exposes category navigation, tags, and related content', async () => 
   assert.match(post, /post-tags/);
   assert.match(sidebar, /sidebar-collapse/);
 });
+
+test('GitHub Pages deploys from main with free standard runners', async () => {
+  const workflow = await readFile(new URL('.github/workflows/deploy.yml', root), 'utf8');
+  assert.match(workflow, /branches:\s*\[main\]/);
+  assert.match(workflow, /runs-on:\s*ubuntu-latest/g);
+  assert.match(workflow, /pages:\s*write/);
+  assert.match(workflow, /id-token:\s*write/);
+  assert.match(workflow, /withastro\/action@v6/);
+  assert.match(workflow, /actions\/deploy-pages@v5/);
+  assert.doesNotMatch(workflow, /larger|macos-|windows-/i);
+});
