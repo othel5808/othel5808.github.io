@@ -22,17 +22,12 @@ const { items } = Astro.props;
     aria-expanded="false"
     aria-controls="document-navigation"><span>목차</span><b>＋</b></button
   >
-  <p>ON THIS PAGE</p>
-  <nav id="document-navigation">
-    {
-      items.map((item, index) => (
-        <a href={item.href}>
-          <span>{String(index + 1).padStart(2, '0')}</span>
-          {item.label}
-        </a>
-      ))
-    }
-  </nav>
+  <div class="sidebar-content">
+    <p class="sidebar-label">ON THIS PAGE</p>
+    <nav id="document-navigation">
+      {items.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+  </div>
 </aside>
 <script>
   const sidebar = document.querySelector('[data-doc-nav]');
@@ -46,6 +41,18 @@ const { items } = Astro.props;
     toggle.setAttribute('aria-expanded', String(open));
   });
   sidebar?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+  const links = [...(sidebar?.querySelectorAll('nav a') ?? [])];
+  const sections = links
+    .map((link) => document.querySelector(link.getAttribute('href') ?? ''))
+    .filter(Boolean);
+  const updateActiveLink = () => {
+    const current = [...sections]
+      .reverse()
+      .find((section) => section.getBoundingClientRect().top <= 180);
+    links.forEach((link) => link.classList.toggle('active', link.hash === `#${current?.id}`));
+  };
+  updateActiveLink();
+  document.addEventListener('scroll', updateActiveLink, { passive: true });
   sidebar
     ?.querySelector('.sidebar-collapse')
     ?.addEventListener('click', () =>

@@ -277,3 +277,33 @@ Verify `/portfolio/`, `/`, `/blog/`, and `/resume/` at 1280px, 820px, and 390px.
 - [ ] **Step 5:** Convert desktop/tablet sidebars to full-height panels with a collapsible rail while retaining phone popups.
 - [ ] **Step 6:** Run `npm test` and verify static generation passes.
 - [ ] **Step 7:** Verify desktop, tablet, and phone sidebar behavior and horizontal overflow in the browser.
+
+### Task 9: Unify portfolio and blog sidebars
+
+**Files:**
+
+- Modify: `src/components/DocumentSidebar.astro`
+- Modify: `src/pages/portfolio.astro`
+- Modify: `src/styles/global.css`
+- Modify: `tests/site-structure.test.mjs`
+
+- [ ] **Step 1:** Add failing tests requiring number-free portfolio links, the shared sidebar content structure, and the main 1120px content proportion.
+- [ ] **Step 2:** Run `npm test` and confirm the new assertions fail against the existing numbered portfolio navigation.
+- [ ] **Step 3:** Simplify the portfolio navigation markup and align its classes with the blog category sidebar.
+- [ ] **Step 4:** Update portfolio layout widths and spacing to use the main-page maximum width while preserving slide sections.
+- [ ] **Step 5:** Run formatting, tests, and the static build.
+- [ ] **Step 6:** Compare portfolio and blog sidebars at desktop and phone widths in the browser.
+
+### Task 10: Unify resume navigation
+
+**Files:**
+
+- Modify: `src/pages/resume.astro`
+- Modify: `src/styles/global.css`
+- Modify: `tests/site-structure.test.mjs`
+
+- [ ] **Step 1:** Add a failing test requiring the resume layout and shared full-height sidebar selectors.
+- [ ] **Step 2:** Run `npm test` and confirm the resume-specific assertion fails.
+- [ ] **Step 3:** Wrap the resume hero and content in a sidebar-aware main column.
+- [ ] **Step 4:** Share desktop, tablet, collapsed-rail, and phone popup styles with the portfolio sidebar.
+- [ ] **Step 5:** Run formatting, tests, static build, and browser checks at desktop and phone widths.

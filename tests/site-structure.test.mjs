@@ -77,3 +77,22 @@ test('GitHub Pages deploys from main with free standard runners', async () => {
   assert.match(workflow, /actions\/deploy-pages@v5/);
   assert.doesNotMatch(workflow, /larger|macos-|windows-/i);
 });
+
+test('portfolio navigation matches the blog sidebar and main content proportion', async () => {
+  const sidebar = await readFile(new URL('src/components/DocumentSidebar.astro', root), 'utf8');
+  const styles = await readFile(new URL('src/styles/global.css', root), 'utf8');
+  assert.match(sidebar, /sidebar-content/);
+  assert.doesNotMatch(sidebar, /items\.map\(\(item, index\)/);
+  assert.doesNotMatch(sidebar, /padStart/);
+  assert.match(styles, /--portfolio-content-max:\s*1120px/);
+  assert.match(styles, /(?:^|\n)\s*height:\s*calc\(100vh - 74px\)/);
+});
+
+test('resume uses the shared full-height responsive sidebar', async () => {
+  const resume = await readFile(new URL('src/pages/resume.astro', root), 'utf8');
+  const styles = await readFile(new URL('src/styles/global.css', root), 'utf8');
+  assert.match(resume, /resume-layout/);
+  assert.match(resume, /resume-main/);
+  assert.match(styles, /\.resume-layout \.doc-sidebar/);
+  assert.match(styles, /\.resume-main/);
+});

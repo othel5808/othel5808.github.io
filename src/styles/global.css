@@ -9,6 +9,7 @@
   --accent: #f06738;
   --dark: #1e2b38;
   --max: 1120px;
+  --portfolio-content-max: 1120px;
   color-scheme: light;
 }
 :root[data-theme='dark'] {
@@ -782,10 +783,13 @@ button {
   line-height: 1;
   cursor: pointer;
 }
-.blog-layout {
+.blog-layout,
+.resume-layout {
   min-height: calc(100vh - 74px);
 }
-.blog-sidebar {
+.blog-sidebar,
+.portfolio-layout .doc-sidebar,
+.resume-layout .doc-sidebar {
   position: fixed;
   z-index: 8;
   top: 74px;
@@ -797,17 +801,23 @@ button {
   border-right: 1px solid var(--line);
   transition: width 0.22s ease;
 }
-.blog-sidebar .sidebar-label {
+.blog-sidebar .sidebar-label,
+.portfolio-layout .doc-sidebar .sidebar-label,
+.resume-layout .doc-sidebar .sidebar-label {
   font: 600 9px 'IBM Plex Mono';
   color: var(--faint);
   letter-spacing: 0.1em;
 }
-.blog-sidebar nav {
+.blog-sidebar nav,
+.portfolio-layout .doc-sidebar nav,
+.resume-layout .doc-sidebar nav {
   display: flex;
   flex-direction: column;
   margin-top: 18px;
 }
-.blog-sidebar nav a {
+.blog-sidebar nav a,
+.portfolio-layout .doc-sidebar nav a,
+.resume-layout .doc-sidebar nav a {
   display: flex;
   justify-content: space-between;
   padding: 11px 8px;
@@ -816,7 +826,11 @@ button {
   font-size: 13px;
 }
 .blog-sidebar nav a:hover,
-.blog-sidebar nav a.active {
+.blog-sidebar nav a.active,
+.portfolio-layout .doc-sidebar nav a:hover,
+.portfolio-layout .doc-sidebar nav a.active,
+.resume-layout .doc-sidebar nav a:hover,
+.resume-layout .doc-sidebar nav a.active {
   color: var(--accent);
   border-color: var(--accent);
 }
@@ -824,7 +838,8 @@ button {
   font: 500 10px 'IBM Plex Mono';
   color: var(--faint);
 }
-.blog-main {
+.blog-main,
+.resume-main {
   margin-left: 240px;
   transition: margin-left 0.22s ease;
 }
@@ -842,38 +857,50 @@ button {
 .blog-sidebar-collapsed .blog-main {
   margin-left: 52px;
 }
+.doc-sidebar-collapsed .resume-layout .doc-sidebar {
+  width: 52px;
+  padding-inline: 10px;
+}
+.doc-sidebar-collapsed .resume-layout .doc-sidebar .sidebar-content {
+  display: none;
+}
+.doc-sidebar-collapsed .resume-layout .doc-sidebar .sidebar-collapse {
+  right: 10px;
+  transform: rotate(180deg);
+}
+.doc-sidebar-collapsed .resume-main {
+  margin-left: 52px;
+}
 @media (min-width: 601px) {
-  .portfolio-layout .doc-sidebar {
-    top: 74px;
-    bottom: 0;
-    left: 0;
+  .portfolio-layout .doc-sidebar,
+  .resume-layout .doc-sidebar {
     transform: none;
-    width: 240px;
-    padding: 72px 24px 24px;
-    border: 0;
-    border-right: 1px solid var(--line);
+    height: calc(100vh - 74px);
+    align-self: stretch;
     border-radius: 0;
     box-shadow: none;
-    background: var(--surface);
-    transition: width 0.22s ease;
+    backdrop-filter: none;
   }
-  .portfolio-layout .doc-sidebar .sidebar-collapse {
+  .portfolio-layout .doc-sidebar .sidebar-collapse,
+  .resume-layout .doc-sidebar .sidebar-collapse {
     display: block;
   }
   .portfolio-layout .doc-content {
-    width: min(calc(100% - 300px), 960px);
-    margin-left: max(270px, calc((100vw - 720px) / 2));
+    width: min(calc(100% - 280px), var(--portfolio-content-max));
+    margin-left: max(260px, calc((100vw - var(--portfolio-content-max) + 240px) / 2));
     margin-right: auto;
     transition:
       width 0.22s ease,
       margin-left 0.22s ease;
   }
+  .resume-content {
+    padding-bottom: 100px;
+  }
   .doc-sidebar-collapsed .portfolio-layout .doc-sidebar {
     width: 52px;
     padding-inline: 10px;
   }
-  .doc-sidebar-collapsed .portfolio-layout .doc-sidebar > p,
-  .doc-sidebar-collapsed .portfolio-layout .doc-sidebar nav {
+  .doc-sidebar-collapsed .portfolio-layout .doc-sidebar .sidebar-content {
     display: none;
   }
   .doc-sidebar-collapsed .portfolio-layout .doc-sidebar .sidebar-collapse {
@@ -881,8 +908,8 @@ button {
     transform: rotate(180deg);
   }
   .doc-sidebar-collapsed .portfolio-layout .doc-content {
-    width: min(calc(100% - 110px), 1060px);
-    margin-left: max(82px, calc((100vw - 980px) / 2));
+    width: min(calc(100% - 92px), var(--portfolio-content-max));
+    margin-left: max(72px, calc((100vw - var(--portfolio-content-max) + 52px) / 2));
   }
 }
 .post-footer {
@@ -942,10 +969,12 @@ button {
   .blog-sidebar {
     width: 210px;
   }
-  .blog-main {
+  .blog-main,
+  .resume-main {
     margin-left: 210px;
   }
-  .portfolio-layout .doc-sidebar {
+  .portfolio-layout .doc-sidebar,
+  .resume-layout .doc-sidebar {
     width: 210px;
   }
   .portfolio-layout .doc-content {
@@ -965,10 +994,12 @@ button {
   .sidebar-collapse {
     display: none;
   }
-  .blog-layout {
+  .blog-layout,
+  .resume-layout {
     min-height: auto;
   }
-  .blog-sidebar {
+  .blog-sidebar,
+  .resume-layout .doc-sidebar {
     position: fixed;
     z-index: 20;
     left: 14px;
@@ -979,10 +1010,12 @@ button {
     background: transparent;
     border: 0;
   }
-  .blog-sidebar .doc-nav-toggle {
+  .blog-sidebar .doc-nav-toggle,
+  .resume-layout .doc-sidebar .doc-nav-toggle {
     display: flex;
   }
-  .blog-sidebar .sidebar-content {
+  .blog-sidebar .sidebar-content,
+  .resume-layout .doc-sidebar .sidebar-content {
     display: none;
     position: absolute;
     left: 0;
@@ -994,17 +1027,43 @@ button {
     padding: 16px;
     box-shadow: 0 15px 40px #1113;
   }
-  .blog-sidebar.is-open .sidebar-content {
+  .blog-sidebar.is-open .sidebar-content,
+  .resume-layout .doc-sidebar.is-open .sidebar-content {
     display: block;
   }
-  .blog-sidebar .sidebar-label {
+  .blog-sidebar .sidebar-label,
+  .resume-layout .doc-sidebar .sidebar-label {
     display: none;
   }
-  .blog-sidebar nav {
+  .blog-sidebar nav,
+  .resume-layout .doc-sidebar nav {
+    margin: 0;
+  }
+  .portfolio-layout .doc-sidebar .sidebar-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    bottom: 52px;
+    width: 210px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 15px 40px #1113;
+  }
+  .portfolio-layout .doc-sidebar.is-open .sidebar-content {
+    display: block;
+  }
+  .portfolio-layout .doc-sidebar .sidebar-label {
+    display: none;
+  }
+  .portfolio-layout .doc-sidebar nav {
     margin: 0;
   }
   .blog-main,
-  .blog-sidebar-collapsed .blog-main {
+  .blog-sidebar-collapsed .blog-main,
+  .resume-main,
+  .doc-sidebar-collapsed .resume-main {
     margin-left: 0;
   }
   .blog-sidebar-collapsed .blog-sidebar {
