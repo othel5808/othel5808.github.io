@@ -307,3 +307,18 @@ Verify `/portfolio/`, `/`, `/blog/`, and `/resume/` at 1280px, 820px, and 390px.
 - [ ] **Step 3:** Wrap the resume hero and content in a sidebar-aware main column.
 - [ ] **Step 4:** Share desktop, tablet, collapsed-rail, and phone popup styles with the portfolio sidebar.
 - [ ] **Step 5:** Run formatting, tests, static build, and browser checks at desktop and phone widths.
+
+### Task 11: Backend and data engineering portfolio
+
+**Files:**
+
+- Modify: `src/pages/portfolio.astro`
+- Modify: `src/styles/global.css`
+- Modify: `tests/site-structure.test.mjs`
+
+- [ ] **Step 1:** Add failing tests for the backend/data role, required technology matrix, three project disclosures, and compact developer layout.
+- [ ] **Step 2:** Run `npm test` and confirm the portfolio assertions fail.
+- [ ] **Step 3:** Replace product-design language with Python backend and data engineering content.
+- [ ] **Step 4:** Add a compact technology matrix, three expandable project cards, dense experiment list, career table, and contact card.
+- [ ] **Step 5:** Reduce slide minimum heights and tune responsive card/table layouts.
+- [ ] **Step 6:** Run formatting, tests, static build, and browser checks at desktop and phone widths.

@@ -1077,3 +1077,293 @@ button {
     padding: 50px 0;
   }
 }
+
+/* Compact backend and data engineering portfolio */
+.developer-hero {
+  min-height: auto;
+  padding-block: clamp(72px, 9vw, 120px);
+}
+.developer-hero h1 {
+  max-width: 900px;
+}
+.hero-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 30px 0 0;
+  list-style: none;
+}
+.hero-stack li {
+  padding: 7px 11px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--surface);
+  font: 600 11px 'IBM Plex Mono';
+}
+.developer-portfolio .portfolio-slide,
+.developer-portfolio .portfolio-section {
+  min-height: 0;
+  margin-bottom: 28px;
+}
+.developer-portfolio .developer-panel {
+  padding: clamp(36px, 5vw, 64px) !important;
+}
+.developer-portfolio .compact-section {
+  padding: 44px 0 !important;
+}
+.developer-portfolio h2 {
+  font-size: clamp(30px, 4vw, 48px);
+  margin-bottom: 20px;
+}
+.section-description {
+  margin: -10px 0 24px;
+  color: var(--muted);
+}
+.profile-points {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 28px;
+}
+.profile-points article {
+  padding: 16px;
+  border: 1px solid #d8d4cc;
+  background: #f8f6f1;
+}
+.profile-points b,
+.profile-points span {
+  display: block;
+}
+.profile-points b {
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+.profile-points span {
+  color: #686964;
+  font-size: 12px;
+}
+.table-shell {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.tech-matrix,
+.career-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.tech-matrix th,
+.tech-matrix td,
+.career-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+.tech-matrix th {
+  color: var(--faint);
+  background: color-mix(in srgb, var(--surface) 80%, var(--line));
+  font: 600 10px 'IBM Plex Mono';
+}
+.tech-matrix tr:last-child td,
+.career-table tr:last-child td {
+  border-bottom: 0;
+}
+.tech-matrix td:first-child,
+.career-table td:first-child,
+.career-table td:last-child {
+  color: var(--faint);
+  font: 500 10px 'IBM Plex Mono';
+  white-space: nowrap;
+}
+.engineering-projects {
+  display: grid;
+  gap: 10px;
+}
+.engineering-project {
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.engineering-project summary {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 18px 20px;
+  cursor: pointer;
+  list-style: none;
+}
+.engineering-project summary::-webkit-details-marker {
+  display: none;
+}
+.engineering-project summary::after {
+  content: '+';
+  grid-column: 4;
+  color: var(--accent);
+  font-size: 20px;
+}
+.engineering-project[open] summary::after {
+  content: '−';
+}
+.project-index {
+  color: var(--faint);
+  font: 600 10px 'IBM Plex Mono';
+}
+.project-heading b,
+.project-heading small {
+  display: block;
+}
+.project-heading b {
+  font-size: 16px;
+}
+.project-heading small {
+  margin-top: 2px;
+  color: var(--faint);
+  font: 500 9px 'IBM Plex Mono';
+}
+.project-result {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.project-result em {
+  color: var(--accent);
+  font: normal 500 9px 'IBM Plex Mono';
+}
+.project-detail-body {
+  padding: 0 20px 20px 76px;
+  border-top: 1px solid var(--line);
+}
+.data-flow {
+  margin: 18px 0;
+  padding: 12px;
+  overflow-x: auto;
+  background: var(--dark);
+  color: var(--bg) !important;
+  font: 500 11px 'IBM Plex Mono';
+}
+.project-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin: 0;
+  border: 1px solid var(--line);
+}
+.project-facts div {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 10px;
+  padding: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.project-facts div:nth-child(odd) {
+  border-right: 1px solid var(--line);
+}
+.project-facts div:nth-last-child(-n + 2) {
+  border-bottom: 0;
+}
+.project-facts dt {
+  color: var(--accent);
+  font: 600 10px 'IBM Plex Mono';
+}
+.project-facts dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.tinted-section {
+  padding-inline: clamp(22px, 4vw, 42px) !important;
+  background: color-mix(in srgb, var(--surface) 70%, var(--line));
+}
+.dense-work-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.dense-work-list li {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  gap: 16px;
+  align-items: start;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+.dense-work-list > li > span,
+.dense-work-list code {
+  color: var(--faint);
+  font: 500 10px 'IBM Plex Mono';
+}
+.dense-work-list b,
+.dense-work-list p {
+  display: block;
+  margin: 0;
+}
+.dense-work-list p {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.career-table strong,
+.career-table span {
+  display: block;
+}
+.career-table span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.contact-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: center;
+  padding: clamp(28px, 5vw, 52px) !important;
+  margin-bottom: 40px;
+  background: #1e2b38;
+  color: #f8f5ee;
+}
+.contact-card h2 {
+  margin: 2px 0 8px;
+}
+.contact-card p:not(.eyebrow) {
+  margin: 0;
+  color: #c0c8cc;
+}
+@media (max-width: 760px) {
+  .profile-points,
+  .project-facts {
+    grid-template-columns: 1fr;
+  }
+  .project-facts div,
+  .project-facts div:nth-child(odd),
+  .project-facts div:nth-last-child(-n + 2) {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .project-facts div:last-child {
+    border-bottom: 0;
+  }
+  .engineering-project summary {
+    grid-template-columns: 32px 1fr auto;
+  }
+  .project-result {
+    display: none;
+  }
+  .engineering-project summary::after {
+    grid-column: 3;
+  }
+  .project-detail-body {
+    padding: 0 14px 16px;
+  }
+  .dense-work-list li {
+    grid-template-columns: 42px 1fr;
+  }
+  .dense-work-list code {
+    grid-column: 2;
+  }
+  .contact-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

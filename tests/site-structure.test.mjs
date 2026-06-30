@@ -43,7 +43,7 @@ test('portfolio uses presentation sections and a phone-only navigation control',
   const sidebar = await readFile(new URL('src/components/DocumentSidebar.astro', root), 'utf8');
   const styles = await readFile(new URL('src/styles/global.css', root), 'utf8');
   assert.match(portfolio, /portfolio-slide/);
-  assert.match(portfolio, /portfolio-deck/);
+  assert.match(portfolio, /engineering-projects/);
   assert.match(sidebar, /doc-nav-toggle/);
   assert.match(styles, /max-width:\s*600px/);
 });
@@ -95,4 +95,24 @@ test('resume uses the shared full-height responsive sidebar', async () => {
   assert.match(resume, /resume-main/);
   assert.match(styles, /\.resume-layout \.doc-sidebar/);
   assert.match(styles, /\.resume-main/);
+});
+
+test('portfolio presents a compact Python backend and data engineering profile', async () => {
+  const portfolio = await readFile(new URL('src/pages/portfolio.astro', root), 'utf8');
+  const styles = await readFile(new URL('src/styles/global.css', root), 'utf8');
+  for (const technology of [
+    'Python',
+    'Django',
+    'FastAPI',
+    'PostgreSQL',
+    'Airflow',
+    'Kafka',
+    'AWS',
+  ]) {
+    assert.match(portfolio, new RegExp(technology));
+  }
+  assert.match(portfolio, /tech-matrix/);
+  assert.equal((portfolio.match(/class="engineering-project"/g) ?? []).length, 3);
+  assert.match(portfolio, /developer-portfolio/);
+  assert.match(styles, /\.developer-portfolio/);
 });

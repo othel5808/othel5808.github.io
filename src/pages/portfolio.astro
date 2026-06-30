@@ -1,105 +1,284 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DocumentSidebar from '../components/DocumentSidebar.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+
 const items = [
   { href: '#intro', label: '소개' },
-  { href: '#skills', label: '핵심 역량' },
+  { href: '#skills', label: '기술 스택' },
   { href: '#projects', label: '대표 프로젝트' },
-  { href: '#opensource', label: '오픈소스' },
+  { href: '#opensource', label: '오픈소스·실험' },
   { href: '#experience', label: '경력 요약' },
   { href: '#contact', label: '연락처' },
 ];
 ---
 
-<BaseLayout title="포트폴리오 — Othel"
-  ><header class="page-hero portfolio-hero wide">
-    <p class="eyebrow">PORTFOLIO / 2026</p><h1>만든 것과<br />배운 것의 기록</h1><p class="lead">
-      문제를 정의하고 제품으로 풀어낸 과정, 선택의 이유와 그 안에서 얻은 배움을 정리합니다.
-    </p><span class="slide-mark">00 — OPENING</span>
-  </header><div class="doc-layout portfolio-layout">
-    <DocumentSidebar items={items} /><article class="doc-content">
-      <section id="intro" class="portfolio-slide slide-light">
-        <span class="slide-number">01</span><div>
-          <p class="eyebrow">INTRO</p><h2>좋은 제품은<br />명확한 질문에서 시작합니다.</h2><p>
-            사용자의 맥락을 이해하고 복잡한 요구를 단단한 구조로 바꾸는 소프트웨어 엔지니어입니다.
-            화면 너머의 시스템과 운영까지 함께 생각합니다.
+<BaseLayout title="포트폴리오 — Othel">
+  <header class="page-hero portfolio-hero developer-hero wide">
+    <p class="eyebrow">BACKEND · DATA ENGINEER</p>
+    <h1>데이터가 흐르는<br />안정적인 시스템을 만듭니다.</h1>
+    <p class="lead">
+      Python을 주 언어로 API, 데이터 파이프라인, 이벤트 기반 시스템을 개발합니다. 운영 가능한 구조와
+      관측 가능성, 반복 가능한 데이터 처리를 중요하게 생각합니다.
+    </p>
+    <ul class="hero-stack" aria-label="주요 기술">
+      <li>Python</li><li>Django</li><li>FastAPI</li><li>PostgreSQL</li><li>Airflow</li><li>
+        Kafka
+      </li><li>AWS</li>
+    </ul>
+  </header>
+
+  <div class="doc-layout portfolio-layout developer-portfolio">
+    <DocumentSidebar items={items} />
+    <article class="doc-content">
+      <section id="intro" class="portfolio-slide developer-panel slide-light">
+        <span class="slide-number">01</span>
+        <div>
+          <p class="eyebrow">PROFILE</p>
+          <h2>백엔드와 데이터의 경계를 연결합니다.</h2>
+          <p>
+            서비스 API부터 배치·스트리밍 파이프라인, 데이터 저장소까지 하나의 흐름으로 설계합니다.
+            장애를 빠르게 발견할 수 있는 운영 지표와 팀이 이해할 수 있는 기술 문서를 함께 만듭니다.
           </p>
-        </div>
-      </section><section id="skills" class="portfolio-slide slide-dark">
-        <span class="slide-number">02</span><div>
-          <p class="eyebrow">CAPABILITIES</p><h2>생각하고,<br />설계하고, 만듭니다.</h2><div
-            class="skill-grid"
-          >
-            <div class="skill-box">
-              <b>Product</b><span>문제 정의 · UX 설계 · 프로토타이핑</span>
-            </div><div class="skill-box">
-              <b>Engineering</b><span>Web · API · 데이터 모델링</span>
-            </div><div class="skill-box">
-              <b>Collaboration</b><span>기술 문서 · 리뷰 · 팀 협업</span>
-            </div>
-          </div>
-        </div>
-      </section><section id="projects" class="portfolio-section">
-        <span class="slide-number">03</span><p class="eyebrow">SELECTED WORK</p><h2>
-          대표 프로젝트
-        </h2><div class="project-grid portfolio-deck">
-          <ProjectCard
-            index="01"
-            title="AgentBoard"
-            summary="AI 협업의 맥락 단절 문제를 하나의 작업 공간으로 해결했습니다."
-            tags={['Product', 'AI', 'Web']}
-          /><ProjectCard
-            index="02"
-            title="Knowledge Atlas"
-            summary="팀 지식을 연결해 탐색 시간을 줄이는 검색 시스템입니다."
-            tags={['Search', 'Graph']}
-            tone="orange"
-          />
-        </div>
-      </section><section id="opensource" class="portfolio-slide slide-orange">
-        <span class="slide-number">04</span><div>
-          <p class="eyebrow">OPEN SOURCE</p><h2>작은 실험을<br />꾸준히 공개합니다.</h2><div
-            class="timeline"
-          >
+          <div class="profile-points">
             <article>
-              <time>2026</time><div>
-                <h3>astro-reading-time</h3><p>
-                  한글 문서의 예상 읽기 시간을 계산하는 작은 Astro 유틸리티.
-                </p>
-              </div>
-            </article><article>
-              <time>2025</time><div>
-                <h3>tiny-search-ko</h3><p>정적 사이트를 위한 가벼운 한국어 검색 실험.</p>
-              </div>
+              <b>API & Domain</b><span>Django·FastAPI 기반 도메인 및 API 설계</span>
             </article>
+            <article>
+              <b>Data Pipeline</b><span>Airflow·Kafka 기반 배치와 이벤트 처리</span>
+            </article>
+            <article><b>Cloud Operation</b><span>AWS 환경의 배포, 관측, 장애 대응</span></article>
           </div>
-        </div>
-      </section><section id="experience" class="portfolio-section">
-        <span class="slide-number">05</span><p class="eyebrow">EXPERIENCE</p><h2>경력 요약</h2><div
-          class="timeline"
-        >
-          <article>
-            <time>2023 — NOW</time><div>
-              <h3>Senior Software Engineer · Example Inc.</h3><p>
-                제품의 핵심 웹 경험과 내부 플랫폼을 설계하고 개발합니다.
-              </p>
-            </div>
-          </article><article>
-            <time>2020 — 2023</time><div>
-              <h3>Frontend Engineer · Studio Null</h3><p>
-                여러 산업의 디지털 제품을 빠르게 검증하고 출시했습니다.
-              </p>
-            </div>
-          </article>
-        </div>
-      </section><section id="contact" class="portfolio-slide slide-dark">
-        <span class="slide-number">06</span><div>
-          <p class="eyebrow">CONTACT</p><h2>함께 만들 이야기가 있나요?</h2><p>
-            프로젝트 협업과 기술에 관한 대화를 언제든 환영합니다.
-          </p><a class="button slide-button" href="mailto:hello@example.com">이메일 보내기 ↗</a>
         </div>
       </section>
+
+      <section id="skills" class="portfolio-section compact-section">
+        <span class="slide-number">02</span>
+        <p class="eyebrow">TECH MATRIX</p>
+        <h2>기술 스택</h2>
+        <div class="table-shell">
+          <table class="tech-matrix">
+            <thead><tr><th>영역</th><th>주요 기술</th><th>활용 경험</th></tr></thead>
+            <tbody>
+              <tr
+                ><td>Language</td><td><strong>Python</strong></td><td>API, ETL, 자동화, 테스트</td
+                ></tr
+              >
+              <tr
+                ><td>Backend</td><td><strong>Django · FastAPI</strong></td><td
+                  >REST API, 인증, 비동기 작업</td
+                ></tr
+              >
+              <tr
+                ><td>Database</td><td><strong>PostgreSQL</strong></td><td
+                  >스키마 설계, 쿼리 최적화, 마이그레이션</td
+                ></tr
+              >
+              <tr
+                ><td>Data</td><td><strong>Airflow · Kafka</strong></td><td
+                  >배치 DAG, 이벤트 스트림, 재처리</td
+                ></tr
+              >
+              <tr
+                ><td>Cloud</td><td><strong>AWS</strong></td><td
+                  >ECS, RDS, S3, CloudWatch 기반 운영</td
+                ></tr
+              >
+              <tr
+                ><td>Practice</td><td><strong>Test · CI/CD</strong></td><td
+                  >자동화 테스트, 배포 파이프라인, 관측성</td
+                ></tr
+              >
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="projects" class="portfolio-section compact-section">
+        <span class="slide-number">03</span>
+        <p class="eyebrow">SELECTED ENGINEERING</p>
+        <h2>대표 프로젝트</h2>
+        <p class="section-description">
+          카드를 펼치면 시스템 흐름과 구현 내용을 확인할 수 있습니다.
+        </p>
+
+        <div class="engineering-projects">
+          <details class="engineering-project" open>
+            <summary>
+              <span class="project-index">01</span>
+              <span class="project-heading"
+                ><b>실시간 주문 이벤트 플랫폼</b><small>Backend · Event Streaming</small></span
+              >
+              <span class="project-result">처리 지연 감소 <em>샘플</em></span>
+            </summary>
+            <div class="project-detail-body">
+              <p class="data-flow">
+                <code>Client → FastAPI → Kafka → Consumer → PostgreSQL / S3</code>
+              </p>
+              <dl class="project-facts">
+                <div>
+                  <dt>문제</dt><dd>
+                    서비스별로 분리된 주문 이벤트를 안정적으로 수집하고 재처리해야 했습니다.
+                  </dd>
+                </div>
+                <div>
+                  <dt>역할</dt><dd>
+                    이벤트 스키마, API, 컨슈머, 실패 이벤트 재처리 구조를 설계했습니다.
+                  </dd>
+                </div>
+                <div>
+                  <dt>핵심 구현</dt><dd>
+                    멱등성 키, DLQ, 파티션 전략, 구조화 로그와 지표를 적용했습니다.
+                  </dd>
+                </div>
+                <div>
+                  <dt>성과</dt><dd>
+                    처리량과 장애 복구 시간을 실제 프로젝트 수치로 교체할 수 있습니다.
+                  </dd>
+                </div>
+              </dl>
+              <ul class="tag-list">
+                <li>Python</li><li>FastAPI</li><li>Kafka</li><li>PostgreSQL</li><li>AWS</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="engineering-project">
+            <summary>
+              <span class="project-index">02</span>
+              <span class="project-heading"
+                ><b>데이터 품질 배치 파이프라인</b><small>Data Engineering · ETL</small></span
+              >
+              <span class="project-result">재처리 자동화 <em>샘플</em></span>
+            </summary>
+            <div class="project-detail-body">
+              <p class="data-flow"><code>S3 → Airflow → Validation → PostgreSQL → Report</code></p>
+              <dl class="project-facts">
+                <div>
+                  <dt>문제</dt><dd>
+                    수작업 검증과 실패 원인 추적 때문에 데이터 제공이 지연됐습니다.
+                  </dd>
+                </div>
+                <div>
+                  <dt>역할</dt><dd>DAG 분리, 데이터 계약, 백필 및 알림 정책을 설계했습니다.</dd>
+                </div>
+                <div>
+                  <dt>핵심 구현</dt><dd>
+                    태스크 단위 재시도, 파티션 백필, 품질 규칙과 실행 이력을 구현했습니다.
+                  </dd>
+                </div>
+                <div>
+                  <dt>성과</dt><dd>
+                    운영 시간과 실패율을 실제 프로젝트 수치로 교체할 수 있습니다.
+                  </dd>
+                </div>
+              </dl>
+              <ul class="tag-list">
+                <li>Python</li><li>Airflow</li><li>PostgreSQL</li><li>S3</li><li>CloudWatch</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="engineering-project">
+            <summary>
+              <span class="project-index">03</span>
+              <span class="project-heading"
+                ><b>내부 운영 API 통합</b><small>Backend · Platform</small></span
+              >
+              <span class="project-result">운영 흐름 단순화 <em>샘플</em></span>
+            </summary>
+            <div class="project-detail-body">
+              <p class="data-flow"><code>Admin → Django API → Service Layer → RDS / SQS</code></p>
+              <dl class="project-facts">
+                <div>
+                  <dt>문제</dt><dd>
+                    여러 운영 도구에 흩어진 권한과 작업 흐름을 통합해야 했습니다.
+                  </dd>
+                </div>
+                <div>
+                  <dt>역할</dt><dd>
+                    도메인 모델, 권한 정책, 감사 로그와 배포 구조를 설계했습니다.
+                  </dd>
+                </div>
+                <div>
+                  <dt>핵심 구현</dt><dd>
+                    트랜잭션 경계, RBAC, 비동기 작업과 API 테스트를 적용했습니다.
+                  </dd>
+                </div>
+                <div>
+                  <dt>성과</dt><dd>
+                    운영 요청 처리 시간을 실제 프로젝트 수치로 교체할 수 있습니다.
+                  </dd>
+                </div>
+              </dl>
+              <ul class="tag-list">
+                <li>Python</li><li>Django</li><li>PostgreSQL</li><li>SQS</li><li>ECS</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section id="opensource" class="portfolio-section compact-section tinted-section">
+        <span class="slide-number">04</span>
+        <p class="eyebrow">LAB & OPEN SOURCE</p>
+        <h2>오픈소스와 실험</h2>
+        <ul class="dense-work-list">
+          <li>
+            <span>2026</span><div>
+              <b>airflow-dag-observer</b><p>
+                Airflow DAG 실행 상태와 실패 원인을 요약하는 실험용 도구.
+              </p>
+            </div><code>Python · Airflow</code>
+          </li>
+          <li>
+            <span>2025</span><div>
+              <b>fastapi-event-template</b><p>
+                Kafka 이벤트 생산·소비와 테스트 패턴을 담은 샘플 프로젝트.
+              </p>
+            </div><code>FastAPI · Kafka</code>
+          </li>
+          <li>
+            <span>2025</span><div>
+              <b>postgres-query-notes</b><p>실행 계획과 인덱스 최적화 사례를 정리한 학습 저장소.</p>
+            </div><code>PostgreSQL</code>
+          </li>
+        </ul>
+      </section>
+
+      <section id="experience" class="portfolio-section compact-section">
+        <span class="slide-number">05</span>
+        <p class="eyebrow">EXPERIENCE</p>
+        <h2>경력 요약</h2>
+        <div class="table-shell">
+          <table class="career-table">
+            <tbody>
+              <tr
+                ><td>2023 — 현재</td><td
+                  ><strong>Backend & Data Engineer</strong><span
+                    >Example Company · 실제 정보로 교체</span
+                  ></td
+                ><td>API · Pipeline · AWS</td></tr
+              >
+              <tr
+                ><td>2020 — 2023</td><td
+                  ><strong>Python Backend Engineer</strong><span
+                    >Example Company · 실제 정보로 교체</span
+                  ></td
+                ><td>Django · PostgreSQL</td></tr
+              >
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="contact" class="contact-card">
+        <div>
+          <p class="eyebrow">CONTACT</p><h2>함께 해결할 데이터 문제가 있나요?</h2><p>
+            백엔드 시스템과 데이터 파이프라인에 관한 대화를 환영합니다.
+          </p>
+        </div>
+        <a class="button slide-button" href="mailto:hello@example.com">이메일 보내기 ↗</a>
+      </section>
     </article>
-  </div></BaseLayout
->
+  </div>
+</BaseLayout>
