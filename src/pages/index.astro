@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+---
+<BaseLayout>
+  <section class="hero container"><p class="eyebrow">SOFTWARE ENGINEER · SEOUL</p><h1>복잡한 문제를<br/>단순한 경험으로.</h1><p class="lead">제품을 이해하고, 구조를 설계하고, 끝까지 구현합니다. 이곳은 제가 만든 것과 그 과정에서 배운 것을 기록하는 공간입니다.</p><div class="hero-actions"><a class="button primary" href="/portfolio/">작업 살펴보기</a><a class="button" href="/blog/">최근 글 읽기</a></div></section>
+  <section class="section wide"><header class="section-head"><div><p class="eyebrow">SELECTED WORK</p><h2>대표 프로젝트</h2></div><a href="/portfolio/">모두 보기 →</a></header><div class="project-grid"><ProjectCard index="01" title="AgentBoard" summary="사람과 AI 에이전트가 같은 맥락에서 협업하는 작업 공간을 설계했습니다." tags={['Astro','TypeScript','AI']} /><ProjectCard index="02" title="Knowledge Atlas" summary="흩어진 지식을 연결하고 필요한 순간에 발견하는 검색 경험입니다." tags={['Search','Graph','UX']} tone="orange" /></div></section>
+  <section class="section container"><header class="section-head"><div><p class="eyebrow">RECENT NOTES</p><h2>최근 글</h2></div><a href="/blog/">모든 글 →</a></header><a class="post-row" href="/blog/building-a-personal-site/"><time>2026.06.30</time><div><h3>나를 설명하는 개인 사이트 만들기 <span class="new">NEW</span></h3><p>포트폴리오와 블로그 사이에서 정보 구조를 정리한 과정.</p></div><small>6 MIN</small></a><a class="post-row" href="/blog/designing-document-navigation/"><time>2026.06.18</time><div><h3>긴 문서를 위한 사이드바 설계</h3><p>맥락을 잃지 않으면서 콘텐츠에 집중하게 만드는 탐색 방식.</p></div><small>4 MIN</small></a></section>
+</BaseLayout>
+

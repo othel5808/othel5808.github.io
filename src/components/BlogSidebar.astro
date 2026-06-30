@@ -1,0 +1,21 @@
+---
+interface Category { name:string; count:number; }
+interface Props { categories:Category[]; }
+const { categories } = Astro.props;
+---
+<aside class="blog-sidebar app-sidebar" data-app-sidebar>
+  <button class="sidebar-collapse" type="button" aria-label="카테고리 사이드바 접기" aria-expanded="true">‹</button>
+  <button class="doc-nav-toggle" type="button" aria-expanded="false" aria-controls="blog-category-navigation"><span>카테고리</span><b>＋</b></button>
+  <div class="sidebar-content">
+    <p class="sidebar-label">CATEGORIES</p>
+    <nav id="blog-category-navigation"><a class="active" href="/blog/"><span>전체 글</span><b>{categories.reduce((sum,item)=>sum+item.count,0)}</b></a>{categories.map(category=><a href={`/blog/?category=${encodeURIComponent(category.name)}`}><span>{category.name}</span><b>{category.count}</b></a>)}</nav>
+  </div>
+</aside>
+<script>
+  const blogSidebar=document.querySelector('.blog-sidebar');
+  blogSidebar?.querySelector('.sidebar-collapse')?.addEventListener('click',()=>document.documentElement.classList.toggle('blog-sidebar-collapsed'));
+  const mobileToggle=blogSidebar?.querySelector('.doc-nav-toggle');
+  mobileToggle?.addEventListener('click',()=>{const open=blogSidebar.classList.toggle('is-open');mobileToggle.setAttribute('aria-expanded',String(open));});
+  blogSidebar?.querySelectorAll('nav a').forEach(link=>link.addEventListener('click',()=>blogSidebar.classList.remove('is-open')));
+</script>
+
