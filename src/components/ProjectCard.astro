@@ -1,9 +1,19 @@
 ---
-interface Props { index: string; title: string; summary: string; tags: string[]; tone?: string; }
+interface Props {
+  index: string;
+  title: string;
+  summary: string;
+  tags: string[];
+  tone?: string;
+}
 const { index, title, summary, tags, tone = 'navy' } = Astro.props;
 ---
+
 <article class="project-card">
   <div class:list={['project-visual', tone]}><span>{index}</span><b>{title}</b></div>
-  <div><p class="mono">CASE STUDY {index}</p><h3>{title}</h3><p>{summary}</p><ul class="tag-list">{tags.map(tag => <li>{tag}</li>)}</ul><a href="#">프로젝트 살펴보기 <span>↗</span></a></div>
+  <div>
+    <p class="mono">CASE STUDY {index}</p><h3>{title}</h3><p>{summary}</p><ul class="tag-list">
+      {tags.map((tag) => <li>{tag}</li>)}
+    </ul><a href="#">프로젝트 살펴보기 <span>↗</span></a>
+  </div>
 </article>
-

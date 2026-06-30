@@ -2,11 +2,18 @@
 import { NAV_ITEMS, SITE } from '../data/site';
 const path = Astro.url.pathname;
 ---
+
 <header class="site-header">
   <div class="wide header-inner">
     <a class="brand" href="/" aria-label="홈"><i></i>{SITE.name}</a>
     <nav aria-label="주요 메뉴">
-      {NAV_ITEMS.map(item => <a class:list={[path.startsWith(item.href) && 'active']} href={item.href}>{item.label}</a>)}
+      {
+        NAV_ITEMS.map((item) => (
+          <a class:list={[path.startsWith(item.href) && 'active']} href={item.href}>
+            {item.label}
+          </a>
+        ))
+      }
     </nav>
     <button class="theme-toggle" type="button" aria-label="색상 테마 전환">◐</button>
   </div>
@@ -18,4 +25,3 @@ const path = Astro.url.pathname;
     localStorage.setItem('theme', next);
   });
 </script>
-

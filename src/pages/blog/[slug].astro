@@ -2,7 +2,36 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
 import { POSTS, getRelatedPosts } from '../../data/posts.mjs';
-export function getStaticPaths(){return POSTS.map(post=>({params:{slug:post.slug},props:{post,related:getRelatedPosts(post.slug)}}));}
-const {post,related}=Astro.props;
+export function getStaticPaths() {
+  return POSTS.map((post) => ({
+    params: { slug: post.slug },
+    props: { post, related: getRelatedPosts(post.slug) },
+  }));
+}
+const { post, related } = Astro.props;
 ---
-<BaseLayout title={`${post.title} — Othel`}><article class="container page-hero post-page"><p class="eyebrow">{post.category} · {post.date} · {post.readTime} READ</p><h1>{post.title}</h1><p class="lead">{post.lead}</p><section class="section post-body"><h2>페이지는 무엇을 말해야 할까</h2><p>개인 사이트를 시작할 때 가장 먼저 정한 것은 색이나 글꼴이 아니라 방문자가 어떤 사람으로 기억해야 하는지였습니다. 포트폴리오는 결과와 과정을, 글은 그 뒤에 있는 사고를 보여줍니다.</p><h2>서로 다른 페이지, 하나의 목소리</h2><p>포트폴리오와 이력서는 긴 문서를 탐색하기 위한 사이드바를 공유합니다. 반면 글 목록은 시간과 카테고리를 중심으로 흐릅니다. 구조는 다르지만 여백, 글꼴, 색상은 같은 체계를 사용합니다.</p><h2>다음 단계</h2><p>이 데모의 예시 문구를 실제 프로젝트와 경험으로 바꾸면 사이트가 완성됩니다. 콘텐츠가 늘어나도 정보 구조는 그대로 유지됩니다.</p><footer class="post-footer"><p class="eyebrow">TAGS</p><ul class="post-tags">{post.tags.map(tag=><li>#{tag}</li>)}</ul></footer></section><RelatedPosts posts={related}/><p><a class="button" href="/blog/">← 모든 글로 돌아가기</a></p></article></BaseLayout>
+
+<BaseLayout title={`${post.title} — Othel`}
+  ><article class="container page-hero post-page">
+    <p class="eyebrow">{post.category} · {post.date} · {post.readTime} READ</p><h1>
+      {post.title}
+    </h1><p class="lead">{post.lead}</p><section class="section post-body">
+      <h2>페이지는 무엇을 말해야 할까</h2><p>
+        개인 사이트를 시작할 때 가장 먼저 정한 것은 색이나 글꼴이 아니라 방문자가 어떤 사람으로
+        기억해야 하는지였습니다. 포트폴리오는 결과와 과정을, 글은 그 뒤에 있는 사고를 보여줍니다.
+      </p><h2>서로 다른 페이지, 하나의 목소리</h2><p>
+        포트폴리오와 이력서는 긴 문서를 탐색하기 위한 사이드바를 공유합니다. 반면 글 목록은 시간과
+        카테고리를 중심으로 흐릅니다. 구조는 다르지만 여백, 글꼴, 색상은 같은 체계를 사용합니다.
+      </p><h2>다음 단계</h2><p>
+        이 데모의 예시 문구를 실제 프로젝트와 경험으로 바꾸면 사이트가 완성됩니다. 콘텐츠가 늘어나도
+        정보 구조는 그대로 유지됩니다.
+      </p><footer class="post-footer">
+        <p class="eyebrow">TAGS</p><ul class="post-tags">
+          {post.tags.map((tag) => <li>#{tag}</li>)}
+        </ul>
+      </footer>
+    </section><RelatedPosts posts={related} /><p>
+      <a class="button" href="/blog/">← 모든 글로 돌아가기</a>
+    </p>
+  </article></BaseLayout
+>

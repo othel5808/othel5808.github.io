@@ -13,6 +13,7 @@
 ### Task 1: Site metadata and structural smoke test
 
 **Files:**
+
 - Create: `tests/site-structure.test.mjs`
 - Create: `src/data/site.ts`
 - Modify: `package.json`
@@ -55,6 +56,7 @@ git commit -m "chore: configure portfolio site metadata"
 ### Task 2: Shared visual system and navigation
 
 **Files:**
+
 - Create: `src/styles/global.css`
 - Create: `src/layouts/BaseLayout.astro`
 - Create: `src/components/SiteHeader.astro`
@@ -89,6 +91,7 @@ git commit -m "feat: add shared portfolio visual system"
 ### Task 3: Home and document page shell
 
 **Files:**
+
 - Create: `src/components/DocumentSidebar.astro`
 - Create: `src/components/ProjectCard.astro`
 - Modify: `src/pages/index.astro`
@@ -123,6 +126,7 @@ git commit -m "feat: add home portfolio and resume demos"
 ### Task 4: Blog content collection and routes
 
 **Files:**
+
 - Create: `src/content.config.ts`
 - Create: `src/content/blog/building-a-personal-site.md`
 - Create: `src/content/blog/designing-document-navigation.md`
@@ -159,6 +163,7 @@ git commit -m "feat: add content-driven blog demo"
 ### Task 5: Utility pages and deployment
 
 **Files:**
+
 - Create: `src/pages/404.astro`
 - Create: `src/pages/rss.xml.js`
 - Create: `.github/workflows/deploy.yml`
@@ -192,6 +197,7 @@ git commit -m "feat: prepare demo for GitHub Pages"
 ### Task 6: Browser verification
 
 **Files:**
+
 - Modify only files with defects found during verification.
 
 - [ ] **Step 1: Start Astro in required background mode**
@@ -223,6 +229,7 @@ git commit -m "fix: polish responsive demo experience"
 ### Task 7: Responsive presentation portfolio
 
 **Files:**
+
 - Modify: `src/components/DocumentSidebar.astro`
 - Modify: `src/pages/portfolio.astro`
 - Modify: `src/styles/global.css`
@@ -253,6 +260,7 @@ Verify `/portfolio/`, `/`, `/blog/`, and `/resume/` at 1280px, 820px, and 390px.
 ### Task 8: Full-height navigation and related posts
 
 **Files:**
+
 - Create: `src/data/posts.mjs`
 - Create: `src/components/BlogSidebar.astro`
 - Create: `src/components/RelatedPosts.astro`

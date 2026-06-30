@@ -2,7 +2,45 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogSidebar from '../../components/BlogSidebar.astro';
 import { POSTS, getCategories } from '../../data/posts.mjs';
-const categories=getCategories();
+const categories = getCategories();
 ---
-<BaseLayout title="글 — Othel"><div class="blog-layout"><BlogSidebar categories={categories}/><div class="blog-main"><header class="page-hero container"><p class="eyebrow">WRITING / NOTES</p><h1>생각을 정리하고<br/>배움을 연결합니다.</h1><p class="lead">제품, 개발, 협업 과정에서 발견한 것을 오래 남는 글로 기록합니다.</p></header><section class="container section blog-list">{POSTS.map(post=><a class="post-row" href={`/blog/${post.slug}/`}><time>{post.date}</time><div><h3>{post.title}{post.fresh&&<span class="new">NEW</span>}</h3><p>{post.desc}</p><ul class="tag-list"><li>{post.category}</li>{post.tags.slice(0,2).map(tag=><li>{tag}</li>)}</ul></div><small>{post.readTime}</small></a>)}</section></div></div></BaseLayout>
 
+<BaseLayout title="글 — Othel"
+  ><div class="blog-layout">
+    <BlogSidebar categories={categories} /><div class="blog-main">
+      <header class="page-hero container">
+        <p class="eyebrow">WRITING / NOTES</p><h1>생각을 정리하고<br />배움을 연결합니다.</h1><p
+          class="lead"
+        >
+          제품, 개발, 협업 과정에서 발견한 것을 오래 남는 글로 기록합니다.
+        </p>
+      </header><section class="container section blog-list">
+        {
+          POSTS.map((post) => (
+            <a class="post-row" href={`/blog/${post.slug}/`}>
+              <>
+                <time>{post.date}</time>
+                <div>
+                  <>
+                    <h3>
+                      {post.title}
+                      {post.fresh && <span class="new">NEW</span>}
+                    </h3>
+                    <p>{post.desc}</p>
+                    <ul class="tag-list">
+                      <li>{post.category}</li>
+                      {post.tags.slice(0, 2).map((tag) => (
+                        <li>{tag}</li>
+                      ))}
+                    </ul>
+                  </>
+                </div>
+                <small>{post.readTime}</small>
+              </>
+            </a>
+          ))
+        }
+      </section>
+    </div>
+  </div></BaseLayout
+>

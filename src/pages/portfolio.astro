@@ -2,6 +2,104 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DocumentSidebar from '../components/DocumentSidebar.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-const items=[{href:'#intro',label:'소개'},{href:'#skills',label:'핵심 역량'},{href:'#projects',label:'대표 프로젝트'},{href:'#opensource',label:'오픈소스'},{href:'#experience',label:'경력 요약'},{href:'#contact',label:'연락처'}];
+const items = [
+  { href: '#intro', label: '소개' },
+  { href: '#skills', label: '핵심 역량' },
+  { href: '#projects', label: '대표 프로젝트' },
+  { href: '#opensource', label: '오픈소스' },
+  { href: '#experience', label: '경력 요약' },
+  { href: '#contact', label: '연락처' },
+];
 ---
-<BaseLayout title="포트폴리오 — Othel"><header class="page-hero portfolio-hero wide"><p class="eyebrow">PORTFOLIO / 2026</p><h1>만든 것과<br/>배운 것의 기록</h1><p class="lead">문제를 정의하고 제품으로 풀어낸 과정, 선택의 이유와 그 안에서 얻은 배움을 정리합니다.</p><span class="slide-mark">00 — OPENING</span></header><div class="doc-layout portfolio-layout"><DocumentSidebar items={items}/><article class="doc-content"><section id="intro" class="portfolio-slide slide-light"><span class="slide-number">01</span><div><p class="eyebrow">INTRO</p><h2>좋은 제품은<br/>명확한 질문에서 시작합니다.</h2><p>사용자의 맥락을 이해하고 복잡한 요구를 단단한 구조로 바꾸는 소프트웨어 엔지니어입니다. 화면 너머의 시스템과 운영까지 함께 생각합니다.</p></div></section><section id="skills" class="portfolio-slide slide-dark"><span class="slide-number">02</span><div><p class="eyebrow">CAPABILITIES</p><h2>생각하고,<br/>설계하고, 만듭니다.</h2><div class="skill-grid"><div class="skill-box"><b>Product</b><span>문제 정의 · UX 설계 · 프로토타이핑</span></div><div class="skill-box"><b>Engineering</b><span>Web · API · 데이터 모델링</span></div><div class="skill-box"><b>Collaboration</b><span>기술 문서 · 리뷰 · 팀 협업</span></div></div></div></section><section id="projects" class="portfolio-section"><span class="slide-number">03</span><p class="eyebrow">SELECTED WORK</p><h2>대표 프로젝트</h2><div class="project-grid portfolio-deck"><ProjectCard index="01" title="AgentBoard" summary="AI 협업의 맥락 단절 문제를 하나의 작업 공간으로 해결했습니다." tags={['Product','AI','Web']}/><ProjectCard index="02" title="Knowledge Atlas" summary="팀 지식을 연결해 탐색 시간을 줄이는 검색 시스템입니다." tags={['Search','Graph']} tone="orange"/></div></section><section id="opensource" class="portfolio-slide slide-orange"><span class="slide-number">04</span><div><p class="eyebrow">OPEN SOURCE</p><h2>작은 실험을<br/>꾸준히 공개합니다.</h2><div class="timeline"><article><time>2026</time><div><h3>astro-reading-time</h3><p>한글 문서의 예상 읽기 시간을 계산하는 작은 Astro 유틸리티.</p></div></article><article><time>2025</time><div><h3>tiny-search-ko</h3><p>정적 사이트를 위한 가벼운 한국어 검색 실험.</p></div></article></div></div></section><section id="experience" class="portfolio-section"><span class="slide-number">05</span><p class="eyebrow">EXPERIENCE</p><h2>경력 요약</h2><div class="timeline"><article><time>2023 — NOW</time><div><h3>Senior Software Engineer · Example Inc.</h3><p>제품의 핵심 웹 경험과 내부 플랫폼을 설계하고 개발합니다.</p></div></article><article><time>2020 — 2023</time><div><h3>Frontend Engineer · Studio Null</h3><p>여러 산업의 디지털 제품을 빠르게 검증하고 출시했습니다.</p></div></article></div></section><section id="contact" class="portfolio-slide slide-dark"><span class="slide-number">06</span><div><p class="eyebrow">CONTACT</p><h2>함께 만들 이야기가 있나요?</h2><p>프로젝트 협업과 기술에 관한 대화를 언제든 환영합니다.</p><a class="button slide-button" href="mailto:hello@example.com">이메일 보내기 ↗</a></div></section></article></div></BaseLayout>
+
+<BaseLayout title="포트폴리오 — Othel"
+  ><header class="page-hero portfolio-hero wide">
+    <p class="eyebrow">PORTFOLIO / 2026</p><h1>만든 것과<br />배운 것의 기록</h1><p class="lead">
+      문제를 정의하고 제품으로 풀어낸 과정, 선택의 이유와 그 안에서 얻은 배움을 정리합니다.
+    </p><span class="slide-mark">00 — OPENING</span>
+  </header><div class="doc-layout portfolio-layout">
+    <DocumentSidebar items={items} /><article class="doc-content">
+      <section id="intro" class="portfolio-slide slide-light">
+        <span class="slide-number">01</span><div>
+          <p class="eyebrow">INTRO</p><h2>좋은 제품은<br />명확한 질문에서 시작합니다.</h2><p>
+            사용자의 맥락을 이해하고 복잡한 요구를 단단한 구조로 바꾸는 소프트웨어 엔지니어입니다.
+            화면 너머의 시스템과 운영까지 함께 생각합니다.
+          </p>
+        </div>
+      </section><section id="skills" class="portfolio-slide slide-dark">
+        <span class="slide-number">02</span><div>
+          <p class="eyebrow">CAPABILITIES</p><h2>생각하고,<br />설계하고, 만듭니다.</h2><div
+            class="skill-grid"
+          >
+            <div class="skill-box">
+              <b>Product</b><span>문제 정의 · UX 설계 · 프로토타이핑</span>
+            </div><div class="skill-box">
+              <b>Engineering</b><span>Web · API · 데이터 모델링</span>
+            </div><div class="skill-box">
+              <b>Collaboration</b><span>기술 문서 · 리뷰 · 팀 협업</span>
+            </div>
+          </div>
+        </div>
+      </section><section id="projects" class="portfolio-section">
+        <span class="slide-number">03</span><p class="eyebrow">SELECTED WORK</p><h2>
+          대표 프로젝트
+        </h2><div class="project-grid portfolio-deck">
+          <ProjectCard
+            index="01"
+            title="AgentBoard"
+            summary="AI 협업의 맥락 단절 문제를 하나의 작업 공간으로 해결했습니다."
+            tags={['Product', 'AI', 'Web']}
+          /><ProjectCard
+            index="02"
+            title="Knowledge Atlas"
+            summary="팀 지식을 연결해 탐색 시간을 줄이는 검색 시스템입니다."
+            tags={['Search', 'Graph']}
+            tone="orange"
+          />
+        </div>
+      </section><section id="opensource" class="portfolio-slide slide-orange">
+        <span class="slide-number">04</span><div>
+          <p class="eyebrow">OPEN SOURCE</p><h2>작은 실험을<br />꾸준히 공개합니다.</h2><div
+            class="timeline"
+          >
+            <article>
+              <time>2026</time><div>
+                <h3>astro-reading-time</h3><p>
+                  한글 문서의 예상 읽기 시간을 계산하는 작은 Astro 유틸리티.
+                </p>
+              </div>
+            </article><article>
+              <time>2025</time><div>
+                <h3>tiny-search-ko</h3><p>정적 사이트를 위한 가벼운 한국어 검색 실험.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section><section id="experience" class="portfolio-section">
+        <span class="slide-number">05</span><p class="eyebrow">EXPERIENCE</p><h2>경력 요약</h2><div
+          class="timeline"
+        >
+          <article>
+            <time>2023 — NOW</time><div>
+              <h3>Senior Software Engineer · Example Inc.</h3><p>
+                제품의 핵심 웹 경험과 내부 플랫폼을 설계하고 개발합니다.
+              </p>
+            </div>
+          </article><article>
+            <time>2020 — 2023</time><div>
+              <h3>Frontend Engineer · Studio Null</h3><p>
+                여러 산업의 디지털 제품을 빠르게 검증하고 출시했습니다.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section><section id="contact" class="portfolio-slide slide-dark">
+        <span class="slide-number">06</span><div>
+          <p class="eyebrow">CONTACT</p><h2>함께 만들 이야기가 있나요?</h2><p>
+            프로젝트 협업과 기술에 관한 대화를 언제든 환영합니다.
+          </p><a class="button slide-button" href="mailto:hello@example.com">이메일 보내기 ↗</a>
+        </div>
+      </section>
+    </article>
+  </div></BaseLayout
+>

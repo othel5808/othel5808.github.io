@@ -1,6 +1,63 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'; import DocumentSidebar from '../components/DocumentSidebar.astro';
-const items=[{href:'#summary',label:'요약'},{href:'#work',label:'경력'},{href:'#resume-projects',label:'프로젝트'},{href:'#tech',label:'기술'},{href:'#education',label:'교육'},{href:'#activities',label:'활동'}];
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DocumentSidebar from '../components/DocumentSidebar.astro';
+const items = [
+  { href: '#summary', label: '요약' },
+  { href: '#work', label: '경력' },
+  { href: '#resume-projects', label: '프로젝트' },
+  { href: '#tech', label: '기술' },
+  { href: '#education', label: '교육' },
+  { href: '#activities', label: '활동' },
+];
 ---
-<BaseLayout title="이력서 — Othel"><header class="page-hero wide"><p class="eyebrow">RÉSUMÉ / UPDATED 2026.06</p><h1>경험과 역량</h1><p class="lead">제품과 기술 사이를 연결하며 쌓아온 경험의 요약입니다.</p></header><div class="doc-layout"><DocumentSidebar items={items}/><article class="doc-content"><section id="summary"><h2>요약</h2><p>웹 제품의 기획, 설계, 구현과 운영을 함께 다루는 소프트웨어 엔지니어입니다. 복잡한 기술을 팀과 사용자가 이해할 수 있는 언어로 설명하는 일을 좋아합니다.</p></section><section id="work"><h2>경력</h2><div class="timeline"><article><time>2023 — 현재</time><div><h3>Example Inc.</h3><b>Senior Software Engineer</b><p>핵심 제품 경험 개선, 디자인 시스템 구축, 개발 생산성 향상을 담당했습니다.</p></div></article><article><time>2020 — 2023</time><div><h3>Studio Null</h3><b>Frontend Engineer</b><p>B2B 및 소비자 서비스의 프로토타입부터 출시까지 참여했습니다.</p></div></article></div></section><section id="resume-projects"><h2>주요 프로젝트</h2><h3>AgentBoard</h3><p>AI 에이전트 협업 플랫폼의 제품 구조와 프론트엔드 아키텍처를 설계했습니다.</p><h3>Knowledge Atlas</h3><p>그래프 기반 사내 지식 탐색 경험을 개발했습니다.</p></section><section id="tech"><h2>기술</h2><div class="skill-grid"><div class="skill-box"><b>Web</b><span>TypeScript, Astro, React</span></div><div class="skill-box"><b>Backend</b><span>Node.js, Python, PostgreSQL</span></div><div class="skill-box"><b>Practice</b><span>Testing, CI/CD, Accessibility</span></div></div></section><section id="education"><h2>교육</h2><h3>Example University</h3><p>Computer Science · 2016 — 2020</p></section><section id="activities"><h2>활동</h2><p>기술 블로그 운영 · 오픈소스 기여 · 사내 기술 세션 발표</p></section></article></div></BaseLayout>
 
+<BaseLayout title="이력서 — Othel"
+  ><header class="page-hero wide">
+    <p class="eyebrow">RÉSUMÉ / UPDATED 2026.06</p><h1>경험과 역량</h1><p class="lead">
+      제품과 기술 사이를 연결하며 쌓아온 경험의 요약입니다.
+    </p>
+  </header><div class="doc-layout">
+    <DocumentSidebar items={items} /><article class="doc-content">
+      <section id="summary">
+        <h2>요약</h2><p>
+          웹 제품의 기획, 설계, 구현과 운영을 함께 다루는 소프트웨어 엔지니어입니다. 복잡한 기술을
+          팀과 사용자가 이해할 수 있는 언어로 설명하는 일을 좋아합니다.
+        </p>
+      </section><section id="work">
+        <h2>경력</h2><div class="timeline">
+          <article>
+            <time>2023 — 현재</time><div>
+              <h3>Example Inc.</h3><b>Senior Software Engineer</b><p>
+                핵심 제품 경험 개선, 디자인 시스템 구축, 개발 생산성 향상을 담당했습니다.
+              </p>
+            </div>
+          </article><article>
+            <time>2020 — 2023</time><div>
+              <h3>Studio Null</h3><b>Frontend Engineer</b><p>
+                B2B 및 소비자 서비스의 프로토타입부터 출시까지 참여했습니다.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section><section id="resume-projects">
+        <h2>주요 프로젝트</h2><h3>AgentBoard</h3><p>
+          AI 에이전트 협업 플랫폼의 제품 구조와 프론트엔드 아키텍처를 설계했습니다.
+        </p><h3>Knowledge Atlas</h3><p>그래프 기반 사내 지식 탐색 경험을 개발했습니다.</p>
+      </section><section id="tech">
+        <h2>기술</h2><div class="skill-grid">
+          <div class="skill-box"><b>Web</b><span>TypeScript, Astro, React</span></div><div
+            class="skill-box"
+          >
+            <b>Backend</b><span>Node.js, Python, PostgreSQL</span>
+          </div><div class="skill-box">
+            <b>Practice</b><span>Testing, CI/CD, Accessibility</span>
+          </div>
+        </div>
+      </section><section id="education">
+        <h2>교육</h2><h3>Example University</h3><p>Computer Science · 2016 — 2020</p>
+      </section><section id="activities">
+        <h2>활동</h2><p>기술 블로그 운영 · 오픈소스 기여 · 사내 기술 세션 발표</p>
+      </section>
+    </article>
+  </div></BaseLayout
+>

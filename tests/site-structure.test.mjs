@@ -20,13 +20,21 @@ test('portfolio contains a complete editable outline', async () => {
 });
 
 test('all demo routes have source pages', async () => {
-  for (const path of ['src/pages/index.astro', 'src/pages/portfolio.astro', 'src/pages/blog/index.astro', 'src/pages/resume.astro']) {
+  for (const path of [
+    'src/pages/index.astro',
+    'src/pages/portfolio.astro',
+    'src/pages/blog/index.astro',
+    'src/pages/resume.astro',
+  ]) {
     await access(new URL(path, root));
   }
 });
 
 test('Astro can statically generate every demo route', () => {
-  const result = spawnSync('npm', ['run', 'build'], { cwd: new URL('../', import.meta.url), encoding: 'utf8' });
+  const result = spawnSync('npm', ['run', 'build'], {
+    cwd: new URL('../', import.meta.url),
+    encoding: 'utf8',
+  });
   assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
 });
 
@@ -37,14 +45,14 @@ test('portfolio uses presentation sections and a phone-only navigation control',
   assert.match(portfolio, /portfolio-slide/);
   assert.match(portfolio, /portfolio-deck/);
   assert.match(sidebar, /doc-nav-toggle/);
-  assert.match(styles, /max-width:600px/);
+  assert.match(styles, /max-width:\s*600px/);
 });
 
 test('related posts rank shared categories and tags without returning the current post', async () => {
   const { POSTS, getRelatedPosts } = await import('../src/data/posts.mjs');
   const related = getRelatedPosts('building-a-personal-site', 3);
   assert.ok(related.length > 0 && related.length <= 3);
-  assert.ok(related.every(post => post.slug !== 'building-a-personal-site'));
+  assert.ok(related.every((post) => post.slug !== 'building-a-personal-site'));
   assert.equal(related[0].slug, 'designing-document-navigation');
   assert.equal(POSTS.length, 4);
 });
