@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BlogList from '../../../components/BlogList.astro';
+import BlogSidebar from '../../../components/BlogSidebar.astro';
+import { getCategories, getPostsByCategory } from '../../../lib/blog.mjs';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const categories = getCategories(posts);
+  return categories.map((category) => ({
+    params: { category: category.id },
+    props: { posts, categories, category },
+  }));
+}
+
+const { posts: allPosts, categories, category } = Astro.props;
+const posts = getPostsByCategory(allPosts, category.id);
+---
+
+<BaseLayout title={`${category.name} 글 — Othel`}>
+  <div class="blog-layout">
+    <BlogSidebar categories={categories} activeCategory={category.id} />
+    <div class="blog-main">
+      <header class="page-hero container">
+        <p class="eyebrow">WRITING / {category.id.toUpperCase()}</p>
+        <h1>{category.name}에 관한<br />기록입니다.</h1>
+        <p class="lead">{category.name} 카테고리의 글 {category.count}개를 모았습니다.</p>
+      </header>
+      <BlogList posts={posts} />
+    </div>
+  </div>
+</BaseLayout>

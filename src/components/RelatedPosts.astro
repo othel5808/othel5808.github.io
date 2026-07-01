@@ -1,14 +1,9 @@
 ---
-interface Post {
-  slug: string;
-  title: string;
-  desc: string;
-  category: string;
-  date: string;
-  readTime: string;
-}
+import type { CollectionEntry } from 'astro:content';
+import { getBlogIdentity, getCategoryName, getPostPath } from '../lib/blog.mjs';
+
 interface Props {
-  posts: Post[];
+  posts: CollectionEntry<'blog'>[];
 }
 const { posts } = Astro.props;
 ---
@@ -25,12 +20,12 @@ const { posts } = Astro.props;
         </header>
         <div class="related-grid">
           {posts.map((post) => (
-            <a href={`/blog/${post.slug}/`}>
+            <a href={getPostPath(post)}>
               <span>
-                {post.category} · {post.readTime}
+                {getCategoryName(getBlogIdentity(post.id).category)} · {post.data.readTime}
               </span>
-              <h3>{post.title}</h3>
-              <p>{post.desc}</p>
+              <h3>{post.data.title}</h3>
+              <p>{post.data.desc}</p>
               <b>읽어보기 →</b>
             </a>
           ))}

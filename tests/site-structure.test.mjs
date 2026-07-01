@@ -5,6 +5,98 @@ import { spawnSync } from 'node:child_process';
 
 const root = new URL('../', import.meta.url);
 
+function createBlogFixtures() {
+  return [
+    {
+      id: 'project/building-a-personal-site.md',
+      data: { date: new Date('2026-06-30'), tags: ['포트폴리오', 'Astro', '정보 설계'] },
+    },
+    {
+      id: 'design/designing-document-navigation.md',
+      data: { date: new Date('2026-06-18'), tags: ['포트폴리오', '정보 설계', '내비게이션'] },
+    },
+    {
+      id: 'backend/notes-on-astro.md',
+      data: { date: new Date('2026-05-02'), tags: ['Astro', '성능', '콘텐츠'] },
+    },
+    {
+      id: 'project/writing-better-case-studies.md',
+      data: { date: new Date('2026-04-12'), tags: ['포트폴리오', '글쓰기', '프로젝트'] },
+    },
+  ];
+}
+
+test('blog folder is the category and the filename is the slug', async () => {
+  const { getBlogIdentity } = await import('../src/lib/blog.mjs');
+  assert.deepEqual(getBlogIdentity('backend/notes-on-astro.md'), {
+    category: 'backend',
+    slug: 'notes-on-astro',
+  });
+});
+
+test('categories and filtered posts are derived from entry folders', async () => {
+  const { getCategories, getPostsByCategory } = await import('../src/lib/blog.mjs');
+  const entries = createBlogFixtures();
+  assert.deepEqual(getCategories(entries), [
+    { id: 'backend', name: '백엔드', count: 1 },
+    { id: 'design', name: '디자인', count: 1 },
+    { id: 'project', name: '프로젝트', count: 2 },
+  ]);
+  assert.equal(getPostsByCategory(entries, 'backend').length, 1);
+});
+
+test('folder based related posts exclude the current entry and rank shared tags first', async () => {
+  const { getRelatedPosts } = await import('../src/lib/blog.mjs');
+  const related = getRelatedPosts(createBlogFixtures(), 'project/building-a-personal-site.md', 3);
+  assert.ok(related.every((entry) => entry.id !== 'project/building-a-personal-site.md'));
+  assert.equal(related[0].id, 'design/designing-document-navigation.md');
+});
+
+test('blog content is stored in category folders with a validated collection', async () => {
+  const config = await readFile(new URL('src/content.config.ts', root), 'utf8');
+  assert.match(config, /glob\(\{\s*base:\s*['"]\.\/src\/content\/blog['"]/);
+  for (const path of [
+    'src/content/blog/backend/notes-on-astro.md',
+    'src/content/blog/design/designing-document-navigation.md',
+    'src/content/blog/project/building-a-personal-site.md',
+    'src/content/blog/project/writing-better-case-studies.md',
+  ]) {
+    await access(new URL(path, root));
+  }
+});
+
+test('blog sidebar and list use folder based category paths', async () => {
+  const sidebar = await readFile(new URL('src/components/BlogSidebar.astro', root), 'utf8');
+  const list = await readFile(new URL('src/components/BlogList.astro', root), 'utf8');
+  assert.match(sidebar, /activeCategory/);
+  assert.match(sidebar, /\/blog\/\$\{category\.id\}\//);
+  assert.doesNotMatch(sidebar, /\?category=/);
+  assert.match(list, /getPostPath/);
+  assert.match(list, /getCategoryName/);
+});
+
+test('overall and category blog routes load the content collection', async () => {
+  const overall = await readFile(new URL('src/pages/blog/index.astro', root), 'utf8');
+  const category = await readFile(new URL('src/pages/blog/[category]/index.astro', root), 'utf8');
+  assert.match(overall, /getCollection\(['"]blog['"]\)/);
+  assert.match(overall, /BlogList/);
+  assert.match(category, /getStaticPaths/);
+  assert.match(category, /getPostsByCategory/);
+  assert.match(category, /activeCategory/);
+});
+
+test('blog detail routes render markdown at category and slug paths', async () => {
+  const detail = await readFile(new URL('src/pages/blog/[category]/[slug].astro', root), 'utf8');
+  const related = await readFile(new URL('src/components/RelatedPosts.astro', root), 'utf8');
+  const home = await readFile(new URL('src/pages/index.astro', root), 'utf8');
+  assert.match(detail, /render\(entry\)/);
+  assert.match(detail, /<Content\s*\/>/);
+  assert.match(related, /getPostPath/);
+  assert.match(home, /\/blog\/project\/building-a-personal-site\//);
+  await assert.rejects(access(new URL('src/pages/blog/[slug].astro', root)));
+  await assert.rejects(access(new URL('src/data/posts.mjs', root)));
+});
+
 test('site defines the requested primary navigation', async () => {
   const source = await readFile(new URL('src/data/site.ts', root), 'utf8');
   for (const href of ['/portfolio/', '/blog/', '/resume/']) {
@@ -48,18 +140,9 @@ test('portfolio uses presentation sections and a phone-only navigation control',
   assert.match(styles, /max-width:\s*600px/);
 });
 
-test('related posts rank shared categories and tags without returning the current post', async () => {
-  const { POSTS, getRelatedPosts } = await import('../src/data/posts.mjs');
-  const related = getRelatedPosts('building-a-personal-site', 3);
-  assert.ok(related.length > 0 && related.length <= 3);
-  assert.ok(related.every((post) => post.slug !== 'building-a-personal-site'));
-  assert.equal(related[0].slug, 'designing-document-navigation');
-  assert.equal(POSTS.length, 4);
-});
-
 test('blog exposes category navigation, tags, and related content', async () => {
   const list = await readFile(new URL('src/pages/blog/index.astro', root), 'utf8');
-  const post = await readFile(new URL('src/pages/blog/[slug].astro', root), 'utf8');
+  const post = await readFile(new URL('src/pages/blog/[category]/[slug].astro', root), 'utf8');
   const sidebar = await readFile(new URL('src/components/DocumentSidebar.astro', root), 'utf8');
   assert.match(list, /BlogSidebar/);
   assert.match(post, /RelatedPosts/);

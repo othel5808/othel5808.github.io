@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getBlogIdentity, getCategoryName, getPostPath } from '../lib/blog.mjs';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+    .format(date)
+    .replaceAll(' ', '')
+    .replace(/\.$/, '');
+---
+
+<section class="container section blog-list">
+  {
+    posts.map((post) => {
+      const { category } = getBlogIdentity(post.id);
+      return (
+        <a class="post-row" href={getPostPath(post)}>
+          <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+          <div>
+            <h3>
+              {post.data.title}
+              {post.data.fresh && <span class="new">NEW</span>}
+            </h3>
+            <p>{post.data.desc}</p>
+            <ul class="tag-list">
+              <li>{getCategoryName(category)}</li>
+              {post.data.tags.slice(0, 2).map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          </div>
+          <small>{post.data.readTime}</small>
+        </a>
+      );
+    })
+  }
+</section>

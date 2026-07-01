@@ -1,12 +1,14 @@
 ---
 interface Category {
+  id: string;
   name: string;
   count: number;
 }
 interface Props {
   categories: Category[];
+  activeCategory?: string;
 }
-const { categories } = Astro.props;
+const { categories, activeCategory } = Astro.props;
 ---
 
 <aside class="blog-sidebar app-sidebar" data-app-sidebar>
@@ -25,11 +27,14 @@ const { categories } = Astro.props;
   <div class="sidebar-content">
     <p class="sidebar-label">CATEGORIES</p>
     <nav id="blog-category-navigation">
-      <a class="active" href="/blog/"
+      <a class:list={[!activeCategory && 'active']} href="/blog/"
         ><span>전체 글</span><b>{categories.reduce((sum, item) => sum + item.count, 0)}</b></a
       >{
         categories.map((category) => (
-          <a href={`/blog/?category=${encodeURIComponent(category.name)}`}>
+          <a
+            class:list={[activeCategory === category.id && 'active']}
+            href={`/blog/${category.id}/`}
+          >
             <>
               <span>{category.name}</span>
               <b>{category.count}</b>

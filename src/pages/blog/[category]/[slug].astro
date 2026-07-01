@@ -1,0 +1,52 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import RelatedPosts from '../../../components/RelatedPosts.astro';
+import { getBlogIdentity, getCategoryName, getRelatedPosts } from '../../../lib/blog.mjs';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((entry) => {
+    const { category, slug } = getBlogIdentity(entry.id);
+    return {
+      params: { category, slug },
+      props: { entry, related: getRelatedPosts(posts, entry.id) },
+    };
+  });
+}
+
+const { entry, related } = Astro.props;
+const { category } = getBlogIdentity(entry.id);
+const { Content } = await render(entry);
+const date = new Intl.DateTimeFormat('ko-KR', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+})
+  .format(entry.data.date)
+  .replaceAll(' ', '')
+  .replace(/\.$/, '');
+---
+
+<BaseLayout title={`${entry.data.title} — Othel`}>
+  <article class="container page-hero post-page">
+    <p class="eyebrow">
+      {getCategoryName(category)} · {date} · {entry.data.readTime} READ
+    </p>
+    <h1>{entry.data.title}</h1>
+    <p class="lead">{entry.data.lead}</p>
+    <section class="section post-body">
+      <Content />
+      <footer class="post-footer">
+        <p class="eyebrow">TAGS</p>
+        <ul class="post-tags">
+          {entry.data.tags.map((tag) => <li>#{tag}</li>)}
+        </ul>
+      </footer>
+    </section>
+    <RelatedPosts posts={related} />
+    <p>
+      <a class="button" href={`/blog/${category}/`}>← {getCategoryName(category)} 글로 돌아가기</a>
+    </p>
+  </article>
+</BaseLayout>
