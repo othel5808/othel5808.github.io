@@ -5,10 +5,36 @@ const CATEGORY_NAMES = {
   project: '프로젝트',
 };
 
-export function getBlogIdentity(id) {
-  const clean = id.replace(/\.mdx?$/, '');
+const DATED_FOLDER = /^(\d{4}-\d{2}-\d{2})\s+.+$/u;
+
+export function getBlogIdentity(entry) {
+  const clean = (entry.filePath ?? entry.id).replace(/\.mdx?$/, '');
   const parts = clean.split('/');
-  return { category: parts[0], slug: parts.at(-1) };
+  const blogIndex = parts.lastIndexOf('blog');
+  const contentParts = blogIndex >= 0 ? parts.slice(blogIndex + 1) : parts;
+  const folder = contentParts.at(-1) === 'index' ? contentParts.at(-2) : contentParts.at(-1);
+  return { category: contentParts[0], slug: entry.data.slug, folder };
+}
+
+export function validateBlogEntries(entries) {
+  const seen = new Set();
+
+  for (const entry of entries) {
+    const { category, slug, folder } = getBlogIdentity(entry);
+    const match = folder.match(DATED_FOLDER);
+    if (!match) throw new Error(`blog folder must start with YYYY-MM-DD: ${folder}`);
+
+    const entryDate = entry.data.date.toISOString().slice(0, 10);
+    if (match[1] !== entryDate) {
+      throw new Error(`folder date ${match[1]} does not match frontmatter date ${entryDate}`);
+    }
+
+    const key = `${category}/${slug}`;
+    if (seen.has(key)) throw new Error(`duplicate blog slug: ${key}`);
+    seen.add(key);
+  }
+
+  return entries;
 }
 
 export function getCategoryName(id) {
@@ -20,9 +46,10 @@ export function sortPosts(entries) {
 }
 
 export function getCategories(entries) {
+  validateBlogEntries(entries);
   const counts = new Map();
   for (const entry of entries) {
-    const { category } = getBlogIdentity(entry.id);
+    const { category } = getBlogIdentity(entry);
     counts.set(category, (counts.get(category) ?? 0) + 1);
   }
 
@@ -32,25 +59,28 @@ export function getCategories(entries) {
 }
 
 export function getPostsByCategory(entries, category) {
-  return sortPosts(entries.filter((entry) => getBlogIdentity(entry.id).category === category));
+  validateBlogEntries(entries);
+  return sortPosts(entries.filter((entry) => getBlogIdentity(entry).category === category));
 }
 
 export function getPostPath(entry) {
-  const { category, slug } = getBlogIdentity(entry.id);
+  validateBlogEntries([entry]);
+  const { category, slug } = getBlogIdentity(entry);
   return `/blog/${category}/${slug}/`;
 }
 
 export function getRelatedPosts(entries, currentId, limit = 3) {
+  validateBlogEntries(entries);
   const current = entries.find((entry) => entry.id === currentId);
   if (!current) return [];
 
-  const currentCategory = getBlogIdentity(current.id).category;
+  const currentCategory = getBlogIdentity(current).category;
   return entries
     .filter((entry) => entry.id !== current.id)
     .map((entry) => ({
       entry,
       score:
-        (getBlogIdentity(entry.id).category === currentCategory ? 1 : 0) +
+        (getBlogIdentity(entry).category === currentCategory ? 1 : 0) +
         entry.data.tags.filter((tag) => current.data.tags.includes(tag)).length * 2,
     }))
     .filter(({ score }) => score > 0)

@@ -1,6 +1,7 @@
 ---
 title: Astro를 선택한 이유
 date: 2026-05-02
+slug: notes-on-astro
 desc: 개인 사이트에서 콘텐츠 중심 도구가 주는 단순함.
 lead: 콘텐츠 사이트에는 적게 보내고 빠르게 읽히는 도구가 잘 어울립니다.
 tags: [Astro, 성능, 콘텐츠]

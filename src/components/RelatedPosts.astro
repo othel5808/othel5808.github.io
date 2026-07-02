@@ -22,7 +22,7 @@ const { posts } = Astro.props;
           {posts.map((post) => (
             <a href={getPostPath(post)}>
               <span>
-                {getCategoryName(getBlogIdentity(post.id).category)} · {post.data.readTime}
+                {getCategoryName(getBlogIdentity(post).category)} · {post.data.readTime}
               </span>
               <h3>{post.data.title}</h3>
               <p>{post.data.desc}</p>
