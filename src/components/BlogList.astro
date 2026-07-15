@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import { getBlogIdentity, getCategoryName, getPostPath } from '../lib/blog.mjs';
 
 interface Props {
@@ -21,10 +22,20 @@ const formatDate = (date: Date) =>
 <section class="container section blog-list">
   {
     posts.map((post) => {
-      const { category } = getBlogIdentity(post.id);
+      const { category } = getBlogIdentity(post);
       return (
         <a class="post-row" href={getPostPath(post)}>
           <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+          {post.data.cover && post.data.coverAlt && (
+            <Image
+              class="post-cover post-cover-thumb"
+              src={post.data.cover}
+              alt={post.data.coverAlt}
+              width={240}
+              height={150}
+              loading="lazy"
+            />
+          )}
           <div>
             <h3>
               {post.data.title}

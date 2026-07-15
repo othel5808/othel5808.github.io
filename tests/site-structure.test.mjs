@@ -8,30 +8,78 @@ const root = new URL('../', import.meta.url);
 function createBlogFixtures() {
   return [
     {
-      id: 'project/building-a-personal-site.md',
-      data: { date: new Date('2026-06-30'), tags: ['포트폴리오', 'Astro', '정보 설계'] },
+      id: 'project/building-a-personal-site',
+      filePath: 'src/content/blog/project/2026-06-30 나를 설명하는 개인 사이트 만들기/index.md',
+      data: {
+        slug: 'building-a-personal-site',
+        date: new Date('2026-06-30T00:00:00Z'),
+        tags: ['포트폴리오', 'Astro', '정보 설계'],
+      },
     },
     {
-      id: 'design/designing-document-navigation.md',
-      data: { date: new Date('2026-06-18'), tags: ['포트폴리오', '정보 설계', '내비게이션'] },
+      id: 'design/designing-document-navigation',
+      filePath: 'src/content/blog/design/2026-06-18 긴 문서를 위한 사이드바 설계/index.md',
+      data: {
+        slug: 'designing-document-navigation',
+        date: new Date('2026-06-18T00:00:00Z'),
+        tags: ['포트폴리오', '정보 설계', '내비게이션'],
+      },
     },
     {
-      id: 'backend/notes-on-astro.md',
-      data: { date: new Date('2026-05-02'), tags: ['Astro', '성능', '콘텐츠'] },
+      id: 'backend/notes-on-astro',
+      filePath: 'src/content/blog/backend/2026-05-02 Astro를 선택한 이유/index.md',
+      data: {
+        slug: 'notes-on-astro',
+        date: new Date('2026-05-02T00:00:00Z'),
+        tags: ['Astro', '성능', '콘텐츠'],
+      },
     },
     {
-      id: 'project/writing-better-case-studies.md',
-      data: { date: new Date('2026-04-12'), tags: ['포트폴리오', '글쓰기', '프로젝트'] },
+      id: 'project/writing-better-case-studies',
+      filePath: 'src/content/blog/project/2026-04-12 좋은 케이스 스터디의 구조/index.md',
+      data: {
+        slug: 'writing-better-case-studies',
+        date: new Date('2026-04-12T00:00:00Z'),
+        tags: ['포트폴리오', '글쓰기', '프로젝트'],
+      },
     },
   ];
 }
 
-test('blog folder is the category and the filename is the slug', async () => {
+test('blog dated folder provides category while frontmatter provides the slug', async () => {
   const { getBlogIdentity } = await import('../src/lib/blog.mjs');
-  assert.deepEqual(getBlogIdentity('backend/notes-on-astro.md'), {
+  const entry = createBlogFixtures()[2];
+  assert.deepEqual(getBlogIdentity(entry), {
     category: 'backend',
     slug: 'notes-on-astro',
+    folder: '2026-05-02 Astro를 선택한 이유',
   });
+});
+
+test('blog entries validate folder dates and duplicate slugs', async () => {
+  const { validateBlogEntries } = await import('../src/lib/blog.mjs');
+  const entries = createBlogFixtures();
+  assert.doesNotThrow(() => validateBlogEntries(entries));
+  assert.throws(
+    () =>
+      validateBlogEntries([
+        { ...entries[0], data: { ...entries[0].data, date: new Date('2026-07-01') } },
+      ]),
+    /folder date 2026-06-30 does not match/,
+  );
+  assert.throws(
+    () =>
+      validateBlogEntries([
+        entries[0],
+        {
+          ...entries[0],
+          id: 'project/building-a-personal-site-copy',
+          filePath: 'src/content/blog/project/2026-07-01 다른 글/index.md',
+          data: { ...entries[0].data, date: new Date('2026-07-01') },
+        },
+      ]),
+    /duplicate blog slug/,
+  );
 });
 
 test('categories and filtered posts are derived from entry folders', async () => {
@@ -47,20 +95,33 @@ test('categories and filtered posts are derived from entry folders', async () =>
 
 test('folder based related posts exclude the current entry and rank shared tags first', async () => {
   const { getRelatedPosts } = await import('../src/lib/blog.mjs');
-  const related = getRelatedPosts(createBlogFixtures(), 'project/building-a-personal-site.md', 3);
-  assert.ok(related.every((entry) => entry.id !== 'project/building-a-personal-site.md'));
-  assert.equal(related[0].id, 'design/designing-document-navigation.md');
+  const entries = createBlogFixtures();
+  const related = getRelatedPosts(entries, entries[0].id, 3);
+  assert.ok(related.every((entry) => entry.id !== entries[0].id));
+  assert.equal(related[0].data.slug, 'designing-document-navigation');
 });
 
 test('blog content is stored in category folders with a validated collection', async () => {
   const config = await readFile(new URL('src/content.config.ts', root), 'utf8');
   assert.match(config, /glob\(\{\s*base:\s*['"]\.\/src\/content\/blog['"]/);
-  for (const path of [
-    'src/content/blog/backend/notes-on-astro.md',
-    'src/content/blog/design/designing-document-navigation.md',
-    'src/content/blog/project/building-a-personal-site.md',
-    'src/content/blog/project/writing-better-case-studies.md',
+  assert.match(config, /pattern:\s*['"]\*\*\/index\.\{md,mdx\}['"]/);
+  for (const [path, slug] of [
+    ['src/content/blog/backend/2026-05-02 Astro를 선택한 이유/index.md', 'notes-on-astro'],
+    [
+      'src/content/blog/design/2026-06-18 긴 문서를 위한 사이드바 설계/index.md',
+      'designing-document-navigation',
+    ],
+    [
+      'src/content/blog/project/2026-06-30 나를 설명하는 개인 사이트 만들기/index.md',
+      'building-a-personal-site',
+    ],
+    [
+      'src/content/blog/project/2026-04-12 좋은 케이스 스터디의 구조/index.md',
+      'writing-better-case-studies',
+    ],
   ]) {
+    const source = await readFile(new URL(path, root), 'utf8');
+    assert.match(source, new RegExp(`slug: ${slug}`));
     await access(new URL(path, root));
   }
 });
@@ -95,6 +156,27 @@ test('blog detail routes render markdown at category and slug paths', async () =
   assert.match(home, /\/blog\/project\/building-a-personal-site\//);
   await assert.rejects(access(new URL('src/pages/blog/[slug].astro', root)));
   await assert.rejects(access(new URL('src/data/posts.mjs', root)));
+});
+
+test('blog list and detail render optional optimized covers', async () => {
+  const list = await readFile(new URL('src/components/BlogList.astro', root), 'utf8');
+  const detail = await readFile(new URL('src/pages/blog/[category]/[slug].astro', root), 'utf8');
+  const styles = await readFile(new URL('src/styles/global.css', root), 'utf8');
+  for (const source of [list, detail]) {
+    assert.match(source, /import \{ Image \} from ['"]astro:assets['"]/);
+    assert.match(source, /data\.cover/);
+    assert.match(source, /data\.coverAlt/);
+  }
+  assert.match(styles, /\.post-cover/);
+  assert.match(styles, /\.post-body img/);
+});
+
+test('blog authoring guide documents covers and animated GIFs', async () => {
+  const guide = await readFile(new URL('docs/blog-authoring.md', root), 'utf8');
+  assert.match(guide, /YYYY-MM-DD/);
+  assert.match(guide, /\.\/images\/cover\.webp/);
+  assert.match(guide, /\.\/images\/demo\.gif/);
+  assert.match(guide, /slug:/);
 });
 
 test('site defines the requested primary navigation', async () => {
@@ -150,6 +232,37 @@ test('blog exposes category navigation, tags, and related content', async () => 
   assert.match(sidebar, /sidebar-collapse/);
 });
 
+test('blog detail page renders giscus comments through a reusable component', async () => {
+  const detail = await readFile(new URL('src/pages/blog/[category]/[slug].astro', root), 'utf8');
+  const comments = await readFile(new URL('src/components/GiscusComments.astro', root), 'utf8');
+  const list = await readFile(new URL('src/pages/blog/index.astro', root), 'utf8');
+  const portfolio = await readFile(new URL('src/pages/portfolio.astro', root), 'utf8');
+  const resume = await readFile(new URL('src/pages/resume.astro', root), 'utf8');
+
+  assert.match(detail, /GiscusComments/);
+  assert.match(comments, /https:\/\/giscus\.app\/client\.js/);
+  assert.match(comments, /PUBLIC_GISCUS_REPO_ID/);
+  assert.match(comments, /data-mapping="pathname"/);
+  assert.doesNotMatch(list, /GiscusComments/);
+  assert.doesNotMatch(portfolio, /GiscusComments/);
+  assert.doesNotMatch(resume, /GiscusComments/);
+});
+
+test('giscus setup is documented with public environment variables', async () => {
+  const docs = await readFile(new URL('docs/giscus-comments.md', root), 'utf8');
+
+  for (const key of [
+    'PUBLIC_GISCUS_REPO',
+    'PUBLIC_GISCUS_REPO_ID',
+    'PUBLIC_GISCUS_CATEGORY',
+    'PUBLIC_GISCUS_CATEGORY_ID',
+  ]) {
+    assert.match(docs, new RegExp(key));
+  }
+  assert.match(docs, /GitHub Discussions/);
+  assert.match(docs, /giscus\.app/);
+});
+
 test('GitHub Pages deploys from main with free standard runners', async () => {
   const workflow = await readFile(new URL('.github/workflows/deploy.yml', root), 'utf8');
   assert.match(workflow, /branches:\s*\[main\]/);
@@ -159,6 +272,20 @@ test('GitHub Pages deploys from main with free standard runners', async () => {
   assert.match(workflow, /withastro\/action@v6/);
   assert.match(workflow, /actions\/deploy-pages@v5/);
   assert.doesNotMatch(workflow, /larger|macos-|windows-/i);
+});
+
+test('GitHub Pages build receives public giscus variables', async () => {
+  const workflow = await readFile(new URL('.github/workflows/deploy.yml', root), 'utf8');
+
+  for (const key of [
+    'PUBLIC_GISCUS_REPO',
+    'PUBLIC_GISCUS_REPO_ID',
+    'PUBLIC_GISCUS_CATEGORY',
+    'PUBLIC_GISCUS_CATEGORY_ID',
+  ]) {
+    const expected = `${key}: \${{ vars.${key} }}`;
+    assert.ok(workflow.includes(expected), `missing ${expected}`);
+  }
 });
 
 test('portfolio navigation matches the blog sidebar and main content proportion', async () => {

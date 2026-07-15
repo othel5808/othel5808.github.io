@@ -1,0 +1,46 @@
+---
+const repo = import.meta.env.PUBLIC_GISCUS_REPO ?? 'othel5808/othel5808.github.io';
+const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
+const category = import.meta.env.PUBLIC_GISCUS_CATEGORY ?? 'General';
+const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
+const isConfigured = Boolean(repo && repoId && category && categoryId);
+---
+
+<section class="comments-section" aria-labelledby="comments-title">
+  <div class="comments-head">
+    <p class="eyebrow">COMMENTS</p>
+    <h2 id="comments-title">댓글</h2>
+    <p>GitHub 계정으로 로그인해 글에 대한 의견이나 질문을 남길 수 있습니다.</p>
+  </div>
+  {
+    isConfigured ? (
+      <script
+        is:inline
+        src="https://giscus.app/client.js"
+        data-repo={repo}
+        data-repo-id={repoId}
+        data-category={category}
+        data-category-id={categoryId}
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="ko"
+        crossorigin="anonymous"
+        async
+      />
+    ) : (
+      import.meta.env.DEV && (
+        <aside class="comments-setup-notice">
+          <strong>giscus 설정이 아직 비어 있습니다.</strong>
+          <span>
+            <code>PUBLIC_GISCUS_REPO_ID</code>와 <code>PUBLIC_GISCUS_CATEGORY_ID</code>를 설정하면
+            댓글 영역이 활성화됩니다.
+          </span>
+        </aside>
+      )
+    )
+  }
+</section>

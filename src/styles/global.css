@@ -230,6 +230,32 @@ button {
   border-top: 1px solid var(--line);
   align-items: start;
 }
+.post-row:has(.post-cover-thumb) {
+  grid-template-columns: 120px 180px 1fr auto;
+}
+.post-cover {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.post-cover-thumb {
+  width: 180px;
+  aspect-ratio: 8 / 5;
+  border-radius: 14px;
+}
+.post-cover-hero {
+  width: 100%;
+  margin: 2rem 0 0;
+  border-radius: 18px;
+}
+.post-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem auto;
+  border-radius: 12px;
+}
 .post-row time,
 .post-row small {
   font: 500 11px 'IBM Plex Mono';
@@ -652,6 +678,12 @@ button {
     grid-template-columns: 1fr;
     gap: 8px;
   }
+  .post-row:has(.post-cover-thumb) {
+    grid-template-columns: 1fr;
+  }
+  .post-cover-thumb {
+    width: 100%;
+  }
   .post-row small {
     margin-top: 5px;
   }
@@ -930,6 +962,42 @@ button {
   border-radius: 20px;
   font: 500 11px 'IBM Plex Mono';
   color: var(--muted);
+}
+.comments-section {
+  padding: 70px 0;
+  border-top: 1px solid var(--line);
+}
+.comments-head {
+  margin-bottom: 28px;
+}
+.comments-head h2 {
+  font-size: 32px;
+  letter-spacing: -0.04em;
+  margin: 4px 0 10px;
+}
+.comments-head p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+}
+.comments-setup-notice {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  border: 1px dashed var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 86%, var(--accent));
+  color: var(--muted);
+}
+.comments-setup-notice strong {
+  color: var(--text);
+}
+.comments-setup-notice code {
+  font: 600 12px 'IBM Plex Mono';
+  color: var(--accent);
+}
+.giscus,
+.giscus-frame {
+  width: 100%;
 }
 .related-posts {
   padding: 70px 0;
