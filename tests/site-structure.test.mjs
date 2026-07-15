@@ -232,6 +232,37 @@ test('blog exposes category navigation, tags, and related content', async () => 
   assert.match(sidebar, /sidebar-collapse/);
 });
 
+test('blog detail page renders giscus comments through a reusable component', async () => {
+  const detail = await readFile(new URL('src/pages/blog/[category]/[slug].astro', root), 'utf8');
+  const comments = await readFile(new URL('src/components/GiscusComments.astro', root), 'utf8');
+  const list = await readFile(new URL('src/pages/blog/index.astro', root), 'utf8');
+  const portfolio = await readFile(new URL('src/pages/portfolio.astro', root), 'utf8');
+  const resume = await readFile(new URL('src/pages/resume.astro', root), 'utf8');
+
+  assert.match(detail, /GiscusComments/);
+  assert.match(comments, /https:\/\/giscus\.app\/client\.js/);
+  assert.match(comments, /PUBLIC_GISCUS_REPO_ID/);
+  assert.match(comments, /data-mapping="pathname"/);
+  assert.doesNotMatch(list, /GiscusComments/);
+  assert.doesNotMatch(portfolio, /GiscusComments/);
+  assert.doesNotMatch(resume, /GiscusComments/);
+});
+
+test('giscus setup is documented with public environment variables', async () => {
+  const docs = await readFile(new URL('docs/giscus-comments.md', root), 'utf8');
+
+  for (const key of [
+    'PUBLIC_GISCUS_REPO',
+    'PUBLIC_GISCUS_REPO_ID',
+    'PUBLIC_GISCUS_CATEGORY',
+    'PUBLIC_GISCUS_CATEGORY_ID',
+  ]) {
+    assert.match(docs, new RegExp(key));
+  }
+  assert.match(docs, /GitHub Discussions/);
+  assert.match(docs, /giscus\.app/);
+});
+
 test('GitHub Pages deploys from main with free standard runners', async () => {
   const workflow = await readFile(new URL('.github/workflows/deploy.yml', root), 'utf8');
   assert.match(workflow, /branches:\s*\[main\]/);
@@ -241,6 +272,20 @@ test('GitHub Pages deploys from main with free standard runners', async () => {
   assert.match(workflow, /withastro\/action@v6/);
   assert.match(workflow, /actions\/deploy-pages@v5/);
   assert.doesNotMatch(workflow, /larger|macos-|windows-/i);
+});
+
+test('GitHub Pages build receives public giscus variables', async () => {
+  const workflow = await readFile(new URL('.github/workflows/deploy.yml', root), 'utf8');
+
+  for (const key of [
+    'PUBLIC_GISCUS_REPO',
+    'PUBLIC_GISCUS_REPO_ID',
+    'PUBLIC_GISCUS_CATEGORY',
+    'PUBLIC_GISCUS_CATEGORY_ID',
+  ]) {
+    const expected = `${key}: \${{ vars.${key} }}`;
+    assert.ok(workflow.includes(expected), `missing ${expected}`);
+  }
 });
 
 test('portfolio navigation matches the blog sidebar and main content proportion', async () => {

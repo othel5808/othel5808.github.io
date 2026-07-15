@@ -963,6 +963,42 @@ button {
   font: 500 11px 'IBM Plex Mono';
   color: var(--muted);
 }
+.comments-section {
+  padding: 70px 0;
+  border-top: 1px solid var(--line);
+}
+.comments-head {
+  margin-bottom: 28px;
+}
+.comments-head h2 {
+  font-size: 32px;
+  letter-spacing: -0.04em;
+  margin: 4px 0 10px;
+}
+.comments-head p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+}
+.comments-setup-notice {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  border: 1px dashed var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 86%, var(--accent));
+  color: var(--muted);
+}
+.comments-setup-notice strong {
+  color: var(--text);
+}
+.comments-setup-notice code {
+  font: 600 12px 'IBM Plex Mono';
+  color: var(--accent);
+}
+.giscus,
+.giscus-frame {
+  width: 100%;
+}
 .related-posts {
   padding: 70px 0;
   border-top: 1px solid var(--line);
